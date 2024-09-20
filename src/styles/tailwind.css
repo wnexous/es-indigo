@@ -1,0 +1,19 @@
+@tailwind components;
+
+@layer components {
+
+    /*-------------------------------------
+    Container CSS
+  --------------------------------------*/
+    .container-xs {
+      @apply w-full md:max-w-[min(1476px,calc(100vw-64px))] max-w-[min(1476px,calc(100vw-32px))] mx-auto;
+    }
+  
+    #app {
+      @apply flex flex-col min-h-screen;
+    }
+  
+    /* .main-height {
+      @apply min-h-[calc(100vh-121px-78px)] sm:min-h-[calc(100vh-93px-76px)];
+    } */
+  }

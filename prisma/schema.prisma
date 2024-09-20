@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String       @id @unique @default(uuid())
+  email       String       @unique
+  name        String
+  isRegistred Boolean      @default(false)
+  phone       String
+  token       String       @unique @default(cuid())
+  proofs      proofs[]
+  schoolDays  schoolDays[]
+  roles       roles[]
+  createAt    DateTime     @default(now())
+  updateAt    DateTime     @default(now()) @updatedAt
+}
+
+model proofs {
+  id          String       @id @unique @default(uuid())
+  proofBase64 String       @db.LongText
+  status      String       @default("pending")
+  value       Float
+  user        User?        @relation(fields: [userId], references: [id])
+  userId      String
+  createAt    DateTime     @default(now())
+  updateAt    DateTime     @default(now()) @updatedAt
+  schoolDays  schoolDays[]
+  token       String       @default(cuid()) @db.TinyText
+}
+
+model schoolDays {
+  id          String   @id @unique @default(uuid())
+  teacherName String
+  startClass  DateTime
+  endClass    DateTime
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String
+  createAt    DateTime @default(now())
+  updateAt    DateTime @default(now()) @updatedAt
+  proof       proofs   @relation(fields: [proofsId], references: [id])
+  proofsId    String
+}
+
+model roles {
+  id       String @id @unique @default(uuid())
+  user     User?  @relation(fields: [userId], references: [id])
+  userId   String
+  roleName String
+}

@@ -1,0 +1,7 @@
+.p-tabmenu-nav{
+    overflow-y: hidden;
+}
+
+.p-menuitem-link{
+    @apply px-4 sm:px-2 whitespace-nowrap
+}

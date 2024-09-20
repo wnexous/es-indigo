@@ -1,0 +1,52 @@
+/* OWNERS */
+@import url(https://use.typekit.net/rgw4peh.css);
+
+/* GOTHAM */
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/Gotham/Gotham-Black.otf");
+    font-family: "Gotham";
+    font-weight: 900;
+}
+
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/Gotham/Gotham-Bold.otf");
+    font-family: "Gotham";
+    font-weight: 700;
+}
+
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/Gotham/Gotham-Book.otf");
+    font-family: "Gotham";
+    font-weight: 600;
+}
+
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/Gotham/Gotham-Medium.otf");
+    font-family: "Gotham";
+    font-weight: 500;
+}
+
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/Gotham/Gotham-Light.otf");
+    font-family: "Gotham";
+    font-weight: 200;
+}
+
+/* BOBA */
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/Boba/Boba.ttf");
+    font-family: "Boba";
+    /* font-weight: 600; */
+}

@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.gradient {
+  background: rgb(86, 148, 216);
+  background: linear-gradient(180deg, rgba(86, 148, 216, 1) 0%, rgba(153, 102, 255, 1) 100%);
+}
+
+.gradient-2 {
+  background: rgb(153, 102, 255);
+  background: -moz-linear-gradient(214deg, rgba(153, 102, 255, 1) 0%, rgba(107, 134, 228, 1) 56%, rgba(153, 102, 255, 1) 90%);
+  background: -webkit-linear-gradient(214deg, rgba(153, 102, 255, 1) 0%, rgba(107, 134, 228, 1) 56%, rgba(153, 102, 255, 1) 90%);
+  background: linear-gradient(214deg, rgba(153, 102, 255, 1) 0%, rgba(107, 134, 228, 1) 56%, rgba(153, 102, 255, 1) 90%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#9966ff", endColorstr="#9966ff", GradientType=1);
+}
+
+.art-text {
+  /* transform: scaleX(0.3); */
+  /* 0.7 achata em 70% do tamanho original */
+  display: inline-block;
+  /* Necessário para que o transform funcione corretamente */
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  @apply bg-[#110f1c] text-white;
+  text-rendering: geometricPrecision;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
