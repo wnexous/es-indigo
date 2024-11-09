@@ -1,4 +1,4 @@
-import database from "@/adapters/database";
+import database from "@/lib/database";
 import ProofStatus from "@/config/ proofStatus";
 import { ApiBackendMetadata__pagination } from "@/interfaces/api.backend.interface";
 import { ProofsDBI, ProofsI, SchoolDaysI, UserI } from "@/interfaces/schemas.interface";

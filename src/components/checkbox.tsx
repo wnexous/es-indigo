@@ -31,7 +31,7 @@ export default function Checkbox({ onChangeState = () => { }, ...props }: checkb
     const CheckInput = () => {
         return <>
             <button onClick={changeState} className={`min-w-7 h-7 text-md cursor-pointer  overflow-hidden rounded-sm relative bg-[#2a283f] flex items-center justify-center`} >
-               {state &&  <>&#x2713;</>}
+                {state && <>&#x2713;</>}
             </button>
         </>
     }

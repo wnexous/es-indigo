@@ -55,6 +55,18 @@ CREATE TABLE `roles` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `courses` (
+    `id` VARCHAR(191) NOT NULL,
+    `startClass` DATETIME(3) NOT NULL,
+    `endClass` DATETIME(3) NOT NULL,
+    `courseName` VARCHAR(191) NOT NULL,
+    `teacherId` VARCHAR(191) NOT NULL,
+    `price` DOUBLE NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `proofs` ADD CONSTRAINT `proofs_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -66,3 +78,6 @@ ALTER TABLE `schoolDays` ADD CONSTRAINT `schoolDays_proofsId_fkey` FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE `roles` ADD CONSTRAINT `roles_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `courses` ADD CONSTRAINT `courses_teacherId_fkey` FOREIGN KEY (`teacherId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

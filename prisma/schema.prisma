@@ -21,10 +21,12 @@ model User {
   phone       String
   token       String       @unique @default(cuid())
   proofs      proofs[]
-  schoolDays  schoolDays[]
   roles       roles[]
   createAt    DateTime     @default(now())
   updateAt    DateTime     @default(now()) @updatedAt
+  // enrolleds   enrolled[]
+  schoolDays  schoolDays[]
+  courses     courses[]
 }
 
 model proofs {
@@ -45,17 +47,96 @@ model schoolDays {
   teacherName String
   startClass  DateTime
   endClass    DateTime
-  user        User?    @relation(fields: [userId], references: [id])
   userId      String
+  user        User?    @relation(fields: [userId], references: [id])
   createAt    DateTime @default(now())
   updateAt    DateTime @default(now()) @updatedAt
   proof       proofs   @relation(fields: [proofsId], references: [id])
   proofsId    String
 }
 
+// "teacher" "student" "admin" 
 model roles {
   id       String @id @unique @default(uuid())
   user     User?  @relation(fields: [userId], references: [id])
   userId   String
   roleName String
 }
+
+model courses {
+  id String @id @default(uuid())
+
+  startClass DateTime
+  endClass   DateTime
+  courseName String
+  teacher    User     @relation(fields: [teacherId], references: [id])
+  teacherId  String
+  price      Float
+}
+
+// // Matriculado
+// model enrolled {
+//   id String @id @default(uuid())
+
+//   user   User   @relation(fields: [userId], references: [id])
+//   userId String
+
+//   course    course @relation(fields: [coursesId], references: [id])
+//   coursesId String
+
+//   createAt DateTime @default(now())
+//   updateAt DateTime @default(now()) @updatedAt
+
+//   @@unique([id, userId, coursesId])
+// }
+
+// // Cursos
+// model course {
+//   id       String      @id @unique @default(uuid())
+//   name     String
+//   startAt  DateTime
+//   endAt    DateTime
+//   weekDays courseDay[]
+
+//   address String
+
+//   teacher   teacher @relation(fields: [teacherId], references: [id]) //professor
+//   teacherId String
+
+//   cost      Float
+//   enrolleds enrolled[] //Pessoas matriculadas no curso
+
+//   isOpen Boolean
+
+//   createAt DateTime @default(now())
+//   updateAt DateTime @default(now()) @updatedAt
+// }
+
+// model courseDay {
+//   id String @id @unique @default(uuid())
+
+//   course   course? @relation(fields: [courseId], references: [id])
+//   courseId String?
+
+//   courseWeek   courseWeek @relation(fields: [courseWeekId], references: [id])
+//   courseWeekId String
+// }
+
+// model courseWeek {
+//   id          String      @id @unique @default(uuid())
+//   weekNumber  Int
+//   weekName    String
+//   coursesDays courseDay[]
+// }
+
+// model teacher {
+//   id    String @id @unique @default(uuid())
+//   name  String
+//   email String
+//   phone String
+
+//   createAt DateTime @default(now())
+//   updateAt DateTime @default(now()) @updatedAt
+
+//   courses course[]
+// }

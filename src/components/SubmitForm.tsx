@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import InputFile, { FileI } from "./InputFile"
 import Loading from "./Loading"
 import Text from "./Text"
+import { MdOutlinePix } from "react-icons/md"
 
 interface SubmitFormI {
     isLogged: boolean
@@ -54,9 +55,8 @@ export default (props: SubmitFormI) => {
             <span className="flex flex-col gap-4 text-[12px]">
                 <Text>
                     Por favor faça seu pagamento via pix e anexe o comprovante em anexo.<br />
-                    Pix: 41998296746
+                    <b className="flex items-center gap-2"><MdOutlinePix size={16} /> Chave PIX: xxxx-xxxx</b>
                 </Text>
-                <Text>Cada aula avulsa tem custo de R$10,00 e o combo com todas as aulas é R$75,00.</Text>
             </span>
         </div>
         <div className="flex flex-col gap-2">
