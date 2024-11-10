@@ -42,7 +42,7 @@ const handler = NextAuth({
                     const parsedProfile = apiBackend.data.parseUserProfile(userProfile)
                     token.roles = parsedProfile.roles
                 } catch (error) {
-                    const user = await apiBackend.database.createEmpityUser({ email, name, phone: "" })
+                    const user = await apiBackend.database.createEmpityUser({ email, name, phone: "", })
                     const parsedProfile = apiBackend.data.parseUserProfile(user)
                     token.roles = parsedProfile.roles
                 }

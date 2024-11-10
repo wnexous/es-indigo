@@ -18,7 +18,7 @@ export default function VoucherClasses() {
     const { proofs, enrolled } = userProfile
 
     useEffect(() => {
-        getCoursesByUserId(userProfile.id)
+        getCoursesByUserId(userProfile.id!)
             .then(setCourses)
     }, [])
 

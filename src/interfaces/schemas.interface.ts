@@ -2,7 +2,7 @@ import ProofStatus from "@/config/ proofStatus";
 import { User, proofs, roles, schoolDays } from "@prisma/client";
 
 
-export type UserI = { name: string, email: string, phone: string, createAt?: string, updateAt?: string, isRegistred?: boolean, id: string }
+export type UserI = { name: string, email: string, phone: string, createAt?: string, updateAt?: string, isRegistred?: boolean, id?: string }
 export type UserDBI = Partial<User> & UserI
 
 export type SchoolDaysI = { teacherName: string, startClass: Date | string, endClass: Date | string, createAt?: string, updateAt?: string, proofsId?: string }
