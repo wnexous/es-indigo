@@ -50,7 +50,7 @@ export default function Proof({ value, createAt, status, token, ...props }: Proo
             <span className="font-bold flex w-full max-w-[7rem]  ">
                 {statusText}
             </span>
-            <button className="flex items-center gap-1 w-full justify-end max-w-[2rem] " onClick={download}>
+            <button className="flex items-center gap-1 w-full justify-end max-w-[2rem] bg-transparent " onClick={download}>
                 <BsDownload size={16} />
             </button>
         </div>

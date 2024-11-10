@@ -1,10 +1,10 @@
 import { SchoolDaysI } from "@/interfaces/schemas.interface"
 
-export interface ClassCheckboxI extends SchoolDaysI {
+export interface ClassCoursesI extends SchoolDaysI {
     id: string
 }
 
-const createSchoolDay = (props: ClassCheckboxI) => (props)
+const createSchoolDay = (props: ClassCoursesI) => (props)
 
 export default {
     erick: createSchoolDay({

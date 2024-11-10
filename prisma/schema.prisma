@@ -27,6 +27,7 @@ model User {
   // enrolleds   enrolled[]
   schoolDays  schoolDays[]
   courses     courses[]
+  enrolled    enrolled[]
 }
 
 model proofs {
@@ -40,6 +41,7 @@ model proofs {
   updateAt    DateTime     @default(now()) @updatedAt
   schoolDays  schoolDays[]
   token       String       @default(cuid()) @db.TinyText
+  enrolled    enrolled[]
 }
 
 model schoolDays {
@@ -69,26 +71,30 @@ model courses {
   startClass DateTime
   endClass   DateTime
   courseName String
-  teacher    User     @relation(fields: [teacherId], references: [id])
+  teacher    User       @relation(fields: [teacherId], references: [id])
   teacherId  String
   price      Float
+  enrolled   enrolled[]
 }
 
-// // Matriculado
-// model enrolled {
-//   id String @id @default(uuid())
+// Matriculado
+model enrolled {
+  id String @id @default(uuid())
 
-//   user   User   @relation(fields: [userId], references: [id])
-//   userId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
-//   course    course @relation(fields: [coursesId], references: [id])
-//   coursesId String
+  course   courses @relation(fields: [courseId], references: [id])
+  courseId String
 
-//   createAt DateTime @default(now())
-//   updateAt DateTime @default(now()) @updatedAt
+  proof   proofs @relation(fields: [proofId], references: [id])
+  proofId String
 
-//   @@unique([id, userId, coursesId])
-// }
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now()) @updatedAt
+
+  @@unique([id, userId, courseId])
+}
 
 // // Cursos
 // model course {

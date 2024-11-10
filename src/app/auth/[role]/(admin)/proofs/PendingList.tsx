@@ -38,7 +38,6 @@ export default ({ ...props }: PendingListI) => {
         closeModal()
     }
 
-
     useEffect(() => {
         apiFrontend.request.getPendingProofs().then(({ data, metadata }) => {
             setProofs(data)

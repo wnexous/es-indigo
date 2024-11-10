@@ -5,6 +5,7 @@ import { UserProfileI } from "@/interfaces/UserProfile.interface"
 import { ApiBackendMetadata__pagination, ApiBackendResponseMetadata } from "@/interfaces/api.backend.interface"
 import { FormI } from "@/interfaces/form.interface"
 import { ProofsDBI, SchoolDaysDBI, UserDBI } from "@/interfaces/schemas.interface"
+import { courses } from "@prisma/client"
 
 export default class RequestController {
 
@@ -35,13 +36,13 @@ export default class RequestController {
         return this.request({ url: "/api/user/profile", method: "post", body: form })
     }
 
-    async getPendingProofs(): Promise<ApiBackendResponseMetadata<(ProofsDBI & { user: UserDBI, schoolDays: SchoolDaysDBI[] })[], ApiBackendMetadata__pagination>> {
+    async getPendingProofs(): Promise<ApiBackendResponseMetadata<(ProofsDBI & { user: UserDBI, courses: courses[] })[], ApiBackendMetadata__pagination>> {
         return await this.request({ url: "/api/admin/proofs/pending", method: "post" })
     }
-    async getApprovedProofs(): Promise<ApiBackendResponseMetadata<(ProofsDBI & { user: UserDBI, schoolDays: SchoolDaysDBI[] })[], ApiBackendMetadata__pagination>> {
+    async getApprovedProofs(): Promise<ApiBackendResponseMetadata<(ProofsDBI & { user: UserDBI, courses: courses[] })[], ApiBackendMetadata__pagination>> {
         return await this.request({ url: "/api/admin/proofs/approved", method: "post" })
     }
-    async getRejectedProofs(): Promise<ApiBackendResponseMetadata<(ProofsDBI & { user: UserDBI, schoolDays: SchoolDaysDBI[] })[], ApiBackendMetadata__pagination>> {
+    async getRejectedProofs(): Promise<ApiBackendResponseMetadata<(ProofsDBI & { user: UserDBI, courses: courses[] })[], ApiBackendMetadata__pagination>> {
         return await this.request({ url: "/api/admin/proofs/rejected", method: "post" })
     }
     async getProof({ id }: { id: string }): Promise<ApiBackendResponseMetadata<(ProofsDBI & { user: UserDBI, schoolDays: SchoolDaysDBI[] }), ApiBackendMetadata__pagination>> {
@@ -53,5 +54,4 @@ export default class RequestController {
     async getChangeProof(data: ProofsChangeData): Promise<ApiBackendResponseMetadata<(ProofsDBI & { user: UserDBI, schoolDays: SchoolDaysDBI[] })[], any>> {
         return await this.request({ url: "/api/admin/proofs", method: "put", body: data })
     }
-
 }

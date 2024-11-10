@@ -1,24 +1,41 @@
 "use server"
 
 import database from "@/lib/database"
+import { User } from "@prisma/client"
 
+export default async function updateUserByEmail(email: string, data: Partial<User>) {
 
-
-export async function getUserByRole(role: string) {
-    return await database.user.findMany({
+    return database.user.update({
         where: {
-            roles: { some: { roleName: role } }
+            email
+        },
+        data,
+        include: {
+            courses: true,
+            enrolled: true,
+
         }
     })
 }
-export async function getAllTeachers() {
-    return await getUserByRole("teacher")
-}
 
 export async function getAllUsers() {
-    return await getUserByRole("user")
+    return database.user.findMany({
+        include: {
+            roles: true,
+        }
+    })
+
 }
 
-export async function getAllAdmins() {
-    return await getUserByRole("admin")
+
+export async function changeUserRole(userId: string, roles: string[]) {
+    await database.roles.deleteMany({
+        where: {
+            userId
+        }
+    })
+
+    return await database.roles.createMany({
+        data: roles.map(roleName => ({ roleName, userId }))
+    })
 }

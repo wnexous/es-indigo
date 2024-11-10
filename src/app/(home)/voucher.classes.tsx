@@ -1,31 +1,41 @@
+import { getCoursesByUserId } from "@/backend/courses"
+import Courses from "@/components/Courses"
 import Heading from "@/components/Heading"
 import Loading from "@/components/Loading"
 import Text from "@/components/Text"
-import SchoolDay from "@/components/schoolDay"
-import { SchoolDaysI } from "@/interfaces/schemas.interface"
+import CoursesModel from "@/models/courses.model"
 import { useProviders } from "@/providers"
+import { courses } from "@prisma/client"
 import { Tooltip } from "primereact/tooltip"
+import { useEffect, useState } from "react"
 import { v4 } from "uuid"
 
 export default function VoucherClasses() {
     const { profile, session } = useProviders()
     const userProfile = profile.getProfile()
-    const { schoolDays, proofs } = userProfile
-    console.log('schoolDays', schoolDays)
 
-    if (!proofs || !schoolDays) return <Loading />
+    const [courses, setCourses] = useState<courses[]>([])
+    const { proofs, enrolled } = userProfile
+
+    useEffect(() => {
+        getCoursesByUserId(userProfile.id)
+            .then(setCourses)
+    }, [])
 
 
-    const sortShoolDays = (sd: SchoolDaysI[]) => sd.sort((a, b) => {
+    if (!proofs || !courses || !enrolled) return <Loading />
+
+    const sortCourses = (sd: CoursesModel[]) => sd.sort((a, b) => {
         const startClassA = new Date(a.startClass).getTime()
         const startClassB = new Date(b.startClass).getTime()
 
         return (startClassA - startClassB)
     })
 
-    const getSchoolDaysByProofId = (id: string) => schoolDays.filter(s => s.proofsId == id)
+    const getCourseByProofId = (proofId: string) => enrolled
+        .filter(s => s.proofId == proofId)
+        .map(enroll => courses.find(course => course.id == enroll.courseId))
 
-    const schoolDaysSorted = sortShoolDays(schoolDays)
     return <>
 
         <div className="flex flex-col gap-2 text-[12px] sm:text-sm">
@@ -36,8 +46,8 @@ export default function VoucherClasses() {
         <div className="my-4 flex flex-col gap-4 whitespace-nowrap">
 
             {Object.values(proofs).map((p, i) => {
-                const schoolDaysFromProf = getSchoolDaysByProofId(p.id!)
-                const schoolDaysFromProfSorted = sortShoolDays(schoolDaysFromProf)
+                const coursesFromProf = getCourseByProofId(p.id!)
+                console.log('coursesFromProf', coursesFromProf)
                 const rowUUID = v4()
                 return <div key={i} className="flex flex-col gap-2">
                     <div className="bg-[#ffffff35] px-2 rounded-md">
@@ -48,7 +58,7 @@ export default function VoucherClasses() {
                             Token: {p.token}
                         </Tooltip>
                     </div>
-                    {Object.values(schoolDaysFromProfSorted).map((p, k) => <SchoolDay {...p} key={k} />)}
+                    {coursesFromProf.map((p, k) => p && <Courses {...p} key={k} />)}
                 </div>
             }
             )}

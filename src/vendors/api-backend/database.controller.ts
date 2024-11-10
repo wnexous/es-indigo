@@ -3,6 +3,7 @@ import ProofStatus from "@/config/ proofStatus";
 import { ApiBackendMetadata__pagination } from "@/interfaces/api.backend.interface";
 import { ProofsDBI, ProofsI, SchoolDaysI, UserI } from "@/interfaces/schemas.interface";
 import { v4 } from "uuid";
+import CoursesModel from "@/models/courses.model";
 
 export default class DatabaseController {
 
@@ -10,19 +11,19 @@ export default class DatabaseController {
 
     getUserByEmail({ email, include }: {
         email: string, include?: Partial<{
+            courses: true
             roles: true;
-            schoolDays: true;
             proofs: true;
+            enrolled: true
         }>
     }) {
 
         return this.Database.user.findUniqueOrThrow({ where: { email }, include })
     }
 
-    updateUserProofClassesByUserEmail({ User, schoolDays, proofs }: { User: UserI, schoolDays: SchoolDaysI[], proofs: ProofsI }) {
+    updateUserProofClassesByUserEmail({ User, courses, proofs }: { User: UserI, courses: CoursesModel[], proofs: ProofsI }) {
         const proofUUID = v4()
 
-        const schoolDaysWithProofId = schoolDays.map(s => ({ ...s, proofsId: proofUUID }))
         const proofWithPersonalId = { ...proofs, id: proofUUID }
 
         return this.Database.user.update({
@@ -31,7 +32,7 @@ export default class DatabaseController {
                 ...User,
                 isRegistred: true,
                 proofs: { create: proofWithPersonalId },
-                schoolDays: { create: schoolDaysWithProofId, },
+                // courses: { create: {} }
             },
             include: {
                 roles: true,
@@ -66,7 +67,7 @@ export default class DatabaseController {
         return this.Database.proofs.findFirstOrThrow({ where: { id: proofId }, include: { schoolDays: true } })
     }
     async deleteProof({ proofId }: { proofId: string }) {
-        await this.Database.schoolDays.deleteMany({ where: { proofsId: proofId } })
+        await this.Database.enrolled.deleteMany({ where: { proofId } })
         const deletedProof = await this.Database.proofs.delete({ include: { user: { include: { proofs: true } } }, where: { id: proofId } })
 
         if (deletedProof.user && deletedProof.user.proofs.length <= 1) {

@@ -6,7 +6,12 @@ import { MultiSelect } from "primereact/multiselect"
 import { useEffect, useState } from "react"
 import "./style.css"
 
-export default function Courses() {
+interface CoursesI {
+    onChange: (courses: { value: CoursesTeacherModel[]; isValid?: boolean; }) => void
+    errorMessage?: string
+}
+
+export default function Courses(props: CoursesI) {
 
     const [coursesData, setCoursesData] = useState<CoursesTeacherModel[]>([])
     const [selecteds, setSelecteds] = useState<CoursesTeacherModel[]>([])
@@ -15,6 +20,10 @@ export default function Courses() {
         getAllCoursesWithTeacher()
             .then(setCoursesData)
     }, [])
+
+    useEffect(() => {
+        props.onChange({ isValid: selecteds.length == 0, value: selecteds })
+    }, [selecteds])
 
     const optionTemplate = (item: CoursesTeacherModel) => <div className="w-full flex justify-between items-center">
         <div className="flex flex-col w-full">
@@ -47,5 +56,6 @@ export default function Courses() {
             value={selecteds}
             onChange={({ value }) => { setSelecteds(value) }}
         />
+        {props.errorMessage && <span className="text-red-500 text-[12px]">{props.errorMessage}</span>}
     </div>
 }

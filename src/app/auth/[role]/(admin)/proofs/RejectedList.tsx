@@ -39,7 +39,6 @@ export default ({ ...props }: PendingListI) => {
     useEffect(() => {
         apiFrontend.request.getRejectedProofs().then(({ data, metadata }) => {
             setProofs(data)
-            // setPagination(metadata)
         })
     }, [])
 

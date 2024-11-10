@@ -7,7 +7,8 @@ export default async function GET(request: NextRequest) {
     if (!email) return apiBackend.auth.error({ message: "invalid email", status: 401 })
 
     try {
-        const databaseResponse = await apiBackend.database.getUserByEmail({ email, include: { roles: true, schoolDays: true, proofs: true } })
+        const databaseResponse = await apiBackend.database.getUserByEmail({ email, include: { roles: true, courses: true, proofs: true, enrolled: true } })
+        console.log('databaseResponse', databaseResponse)
         return Response.json(apiBackend.data.parseUserProfile(databaseResponse))
     } catch (error: any) {
         console.log('error', error)

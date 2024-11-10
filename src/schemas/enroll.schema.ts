@@ -2,7 +2,7 @@ import fileAccepts from '@/config/fileAccepts';
 import getFileExtension from '@/vendors/getFileExtensionByUri';
 import { z } from 'zod';
 
-const homeFormSchema = z.object({
+const enrollSchema = z.object({
     name: z
         .string({ message: "Nome não informado." })
         .min(3, { message: "Nome deve conter ao menos 3 caracteres." })
@@ -16,16 +16,8 @@ const homeFormSchema = z.object({
         .regex(/^\(\d{2}\) \d{4,5}-\d{4}$/, { message: "Número de telefone deve ser válido e pode incluir o código do país." }),
 
     courses: z.array(z.object({
-        courseName: z
-            .string({ message: "Nome do professor não informado." }),
-        teacherId: z
-            .string({ message: "Professor não informado" }),
-        price: z
-            .number({ message: "Preco inválido" }),
-        startClass: z
-            .date({ message: "Data de início não informada." }),
-        endClass: z
-            .date({ message: "Data de início não informada." }),
+        id: z
+            .string({ message: "o id da aula precisa ser uma string" }),
     }))
         .min(1, { message: "É necessário selecionar ao menos uma aula" }),
 
@@ -52,4 +44,4 @@ const homeFormSchema = z.object({
 });
 
 
-export default homeFormSchema
+export default enrollSchema

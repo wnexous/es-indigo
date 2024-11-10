@@ -1,8 +1,6 @@
 import Proof from "@/components/Proof"
-import SchoolDay from "@/components/schoolDay"
 import links from "@/config/links"
 import { useProviders } from "@/providers"
-import { Divider } from "primereact/divider"
 
 export default function VoucherProofs() {
     const { profile } = useProviders()
@@ -12,7 +10,7 @@ export default function VoucherProofs() {
 
         <div className="flex flex-col gap-2 text-[12px] sm:text-sm">
             <h1 className="text-3xl font-bold font-owners lg:text-5xl">PAGAMENTOS</h1>
-            <p>Acompanhe o status de confirmação de pagamento. A confirmação pode demorar até 48 horas, em caso de dúvida, contate-nos pelo <a className="underline" target="_blank" href={links.whatsapp}>WhatsApp 41 99764-3046</a>.</p>
+            <p>Acompanhe o status de confirmação de pagamento. A confirmação pode demorar até 48 horas, em caso de dúvida, contate-nos pelo <a className="underline" target="_blank" href={links.whatsapp}>WhatsApp XX XXXX-XXXX</a>.</p>
         </div>
 
         <div className="my-4 flex flex-col gap-2 w-full text-[12px] sm:text-sm whitespace-nowrap">

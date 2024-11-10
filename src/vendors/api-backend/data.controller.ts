@@ -7,12 +7,11 @@ export default class DataController {
         return await req.json()
     }
     parseUserProfile(data: UserProfileCompleteI): UserProfileI {
-        let { roles, schoolDays, proofs, email, name, phone, token, isRegistred } = data
+        let { roles, courses, proofs, email, name, phone, token, isRegistred, enrolled, id } = data
 
         // Default data obj
-        let returnedData: UserProfileI = { email, name, phone, token, isRegistred }
+        let returnedData: UserProfileI = { email, name, phone, token, isRegistred, courses, enrolled, id }
 
-        if (schoolDays) returnedData["schoolDays"] = schoolDays.map(({ endClass, startClass, teacherName, proofsId }) => ({ endClass, startClass, teacherName, proofsId }))
         if (proofs) returnedData["proofs"] = proofs.map(({ value, status, proofBase64, createAt, id, token }) => ({ value, status, proofBase64, createAt: createAt.toISOString(), id, token }))
         if (roles) returnedData["roles"] = roles.map(r => r.roleName)
 

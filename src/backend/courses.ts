@@ -21,6 +21,14 @@ export async function getAllCoursesWithTeacher() {
     })
 }
 
+export async function getCoursesByUserId(userId: string) {
+    return await database.courses.findMany({
+        where: {
+            enrolled: { some: { userId } }
+        }
+    })
+}
+
 export async function getCourse(id: string) {
     return await database.courses.findFirst({ where: { id } })
 }

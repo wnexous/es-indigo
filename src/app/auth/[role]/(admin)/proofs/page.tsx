@@ -8,8 +8,9 @@ import RejectedList from "./RejectedList"
 import ProofModal from "./modal"
 import { TabMenu } from "primereact/tabmenu"
 import { MenuItem } from "primereact/menuitem"
+import { courses } from "@prisma/client"
 
-export type ProofsUserI = ProofsDBI & { user: UserDBI, schoolDays: SchoolDaysDBI[] }
+export type ProofsUserI = ProofsDBI & { user: UserDBI, courses: courses[] }
 
 
 export default function AdminPage() {
@@ -29,6 +30,7 @@ export default function AdminPage() {
         apiFrontend.request.getChangeProof({ id: id!, data: { status: "approved" } })
     }
     const deleteProof = ({ id, }: ProofsUserI) => {
+        console.log('id', id)
         apiFrontend.request.deleteProof({ id: id! })
     }
 

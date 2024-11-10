@@ -1,7 +1,8 @@
-import { User, proofs, roles, schoolDays } from "@prisma/client";
+import { User, courses, enrolled, proofs, roles } from "@prisma/client";
 
 export interface UserProfileCompleteI extends User {
-    schoolDays?: schoolDays[],
+    courses?: courses[],
+    enrolled?: enrolled[],
     proofs?: proofs[],
     roles?: roles[]
 }

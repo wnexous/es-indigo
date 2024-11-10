@@ -1,7 +1,7 @@
 "use client"
 
 import { createCourse, deleteCourse, editCourse, getAllCourses } from "@/backend/courses"
-import { getAllTeachers } from "@/backend/users"
+import { getAllTeachers } from "@/backend/roles"
 import If from "@/components/if"
 import CoursesModel from "@/models/courses.model"
 import UserModel from "@/models/User.model"

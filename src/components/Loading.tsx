@@ -1,5 +1,5 @@
 export default function Loading({ className }: { className?: string }) {
-    return <div className={"flex gap-4 items-center " + className ?? ""}>
+    return <div className={"flex gap-4 items-center " + className ? className : ""}>
         Carregando <div className="w-6 h-6 border-t rounded-full animate-spin my-auto" />
     </div>
 }

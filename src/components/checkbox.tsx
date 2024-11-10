@@ -1,13 +1,13 @@
 'use client'
 
-import { ClassCheckboxI } from "@/config/teachers"
+import { ClassCoursesI } from "@/config/teachers"
 import { useState } from "react"
 import Text from "./Text"
 
-interface checkboxinterface extends ClassCheckboxI {
+interface checkboxinterface extends ClassCoursesI {
     id: string
     horario: string
-    onChangeState?: (teacher: ClassCheckboxI, state: boolean) => void
+    onChangeState?: (teacher: ClassCoursesI, state: boolean) => void
     state: boolean
 }
 

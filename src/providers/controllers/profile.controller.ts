@@ -35,11 +35,10 @@ export default class ProfileController extends ProviderControllerI<LoginInterfac
     private async fetchUserProfile() {
         try {
             const profile = await apiFrontend.request.getProfile()
+            console.log('profile', profile)
             this.setProfile(profile)
             this.setValue({ hasLoaded: true })
-        } catch (error) {
-
-        }
+        } catch (error) { }
     }
 
     isRegistred() {

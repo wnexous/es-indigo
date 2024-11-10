@@ -1,3 +1,4 @@
+import { getCoursesByUserId } from "@/backend/courses";
 import FileViewer from "@/components/FileViewer";
 import Loading from "@/components/Loading";
 import Text from "@/components/Text";
@@ -5,6 +6,7 @@ import { ProofsDBI, SchoolDaysDBI, SchoolDaysI, UserDBI } from "@/interfaces/sch
 import apiFrontend from "@/vendors/api-frontend";
 import downloadFile from "@/vendors/downloadFile";
 import getFileExtension from "@/vendors/getFileExtensionByUri";
+import { courses } from "@prisma/client";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { useEffect, useState } from "react";
@@ -13,7 +15,17 @@ import { BsWhatsapp } from "react-icons/bs";
 import { CgMail } from "react-icons/cg";
 import { MdOutlineOpenInNew, MdPayment } from "react-icons/md";
 
-export default function ProofModal({ data, onApprove, onReject, onDelete, onClose }: { data?: ProofsDBI & { user: UserDBI, schoolDays: SchoolDaysDBI[] }, onReject: VoidFunction, onApprove: VoidFunction, onDelete: VoidFunction, onClose: VoidFunction }) {
+export default function ProofModal({ data, onApprove, onReject, onDelete, onClose }: { data?: ProofsDBI & { user: UserDBI, courses: courses[] }, onReject: VoidFunction, onApprove: VoidFunction, onDelete: VoidFunction, onClose: VoidFunction }) {
+
+
+    const [courses, setCourses] = useState<courses[]>([])
+
+    useEffect(() => {
+        if (!data?.userId) return;
+        getCoursesByUserId(data.userId)
+            .then(setCourses)
+
+    }, [data])
 
     const [proof, setProof] = useState<ProofsDBI & { user: UserDBI }>()
 
@@ -79,7 +91,7 @@ export default function ProofModal({ data, onApprove, onReject, onDelete, onClos
         minute: "2-digit",
     })
 
-    const sortShoolDays = (sd: SchoolDaysI[]) => sd.sort((a, b) => {
+    const sortShoolDays = (sd: courses[]) => sd.sort((a, b) => {
         const startClassA = new Date(a.startClass).getTime()
         const startClassB = new Date(b.startClass).getTime()
 
@@ -116,8 +128,8 @@ export default function ProofModal({ data, onApprove, onReject, onDelete, onClos
             <div>
 
                 <Text className="font-bold!">Aulas cadastradas:</Text>
-                {data?.schoolDays && Object.values(sortShoolDays(data.schoolDays)).map((s, i) => {
-                    const startAtDate = new Date(s.startClass as string)
+                {courses && Object.values(sortShoolDays(courses)).map((s, i) => {
+                    const startAtDate = new Date(s.startClass)
                     const startAtString = startAtDate.toLocaleString('pt-BR', {
                         day: '2-digit',
                         month: '2-digit',
@@ -125,8 +137,8 @@ export default function ProofModal({ data, onApprove, onReject, onDelete, onClos
                         hour: "2-digit",
                         minute: "2-digit",
                     })
-                    const endAtDate = new Date(s.endClass as string)
-                    const endAtString = startAtDate.toLocaleString('pt-BR', {
+                    const endAtDate = new Date(s.endClass)
+                    const endAtString = endAtDate.toLocaleString('pt-BR', {
                         day: '2-digit',
                         month: '2-digit',
                         year: '2-digit',
@@ -135,7 +147,7 @@ export default function ProofModal({ data, onApprove, onReject, onDelete, onClos
                     })
 
                     return <div className="">
-                        <span className="font-bold"> {s.teacherName}</span> {startAtString} até {endAtString}
+                        <span className="font-bold"> {s.courseName}</span> {startAtString} até {endAtString}
                     </div>
                 }
                 )}

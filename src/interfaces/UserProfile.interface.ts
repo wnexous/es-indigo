@@ -1,8 +1,10 @@
-import { ProofsI, RoleI, SchoolDaysI, UserI } from "./schemas.interface"
+import { courses, enrolled } from "@prisma/client"
+import { ProofsI, RoleI, UserI } from "./schemas.interface"
 
 export interface UserProfileI extends UserI {
     "token": string
     "roles"?: RoleI[],
-    "schoolDays"?: SchoolDaysI[],
+    "courses"?: courses[],
     "proofs"?: ProofsI[]
+    "enrolled"?: enrolled[]
 }
